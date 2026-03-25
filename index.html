@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Airphone - এখনই অর্ডার করুন</title>
+    <link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+    <div class="product-container">
+        <div class="product-header">
+            <h1>Premium Wireless Airphone</h1>
+            <img src="c:\Users\Pentium Silver 9 Gen\Downloads\Airphone.jpg" alt="Airphone">
+            <h2 class="price">মূল্য: ২৫০০ টাকা</h2>
+            <p>সেরা সাউন্ড এবং ১ বছরের ওয়ারেন্টি!</p>
+        </div>
+
+        <div class="free-delivery-badge">
+    <p>🚚 <strong>ফ্রি ডেলিভারি:</strong>সারা বাংলাদেশে ডেলিভারি চার্জ একদম ফ্রি!</p>
+</div>
+
+<div class="product-price-section">
+    <h2 class="price">মূল্য: ২৫০০ টাকা <span class="old-price"> (২৭০০ টাকা)</span></h2>
+    <p class="free-info">পণ্য হাতে পেয়ে মাত্র ২৫০০ টাকা দেবেন।</p>
+</div>
+
+        <div class="order-box">
+            <h3>অর্ডার করতে নিচের তথ্যগুলো দিন</h3>
+            <form id="checkout-form">
+                <div class="input-group">
+                    <label>আপনার নাম:</label>
+                    <input type="text" name="name" placeholder="পুরো নাম লিখুন" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>মোবাইল নম্বর:</label>
+                    <input type="tel" name="phone" placeholder="০১৭XXXXXXXX" pattern="[0-9]{11}" required>
+                </div>
+
+                <div class="input-group">
+                    <label>জেলা নির্বাচন করুন:</label>
+                    <select name="district" required>
+                        <option value="">জেলা পছন্দ করুন</option>
+                        <option value="Dhaka">ঢাকা (Dhaka)</option>
+                        <option value="Chittagong">চট্টগ্রাম (Chittagong)</option>
+                        <option value="Rajshahi">রাজশাহী (Rajshahi)</option>
+                        <option value="Khulna">খুলনা (Khulna)</option>
+                        <option value="Barisal">বরিশাল (Barisal)</option>
+                        <option value="Sylhet">সিলেট (Sylhet)</option>
+                        <option value="Rangpur">রংপুর (Rangpur)</option>
+                        <option value="Mymensingh">ময়মনসিংহ (Mymensingh)</option>
+                        <option value="Gazipur">গাজীপুর (Gazipur)</option>
+                        <option value="Narayanganj">নারায়ণগঞ্জ (Narayanganj)</option>
+                        <option value="Comilla">কুমিল্লা (Comilla)</option>
+                        </select>
+                </div>
+
+                <div class="input-group">
+                    <label>থানা এবং বিস্তারিত ঠিকানা:</label>
+                    <textarea name="address" rows="3" placeholder="যেমন: ধানমন্ডি, রোড নং ৪, ঢাকা" required></textarea>
+                </div>
+
+                <button type="submit" id="submit-btn">অর্ডার কনফার্ম করুন</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="site.js"></script>
+</body>
+</html>
