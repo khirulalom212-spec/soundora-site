@@ -195,4 +195,3 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.disabled = false;
       btn.innerText = 'অর্ডার কনফার্ম করুন';
     });
-});
