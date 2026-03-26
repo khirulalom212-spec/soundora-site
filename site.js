@@ -167,9 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-
   btn.disabled = true;
   btn.innerText = 'অর্ডার প্রসেস হচ্ছে...';
 
