@@ -12,6 +12,14 @@
       <h1>✅ আপনার অর্ডার কনফার্ম হয়েছে</h1>
       <p class="summary-subtitle">ধন্যবাদ! নিচে আপনার অর্ডারের তথ্য দেখুন।</p>
 
+      <div class="summary-row">
+  <span>পরিমাণ:</span>
+  <strong id="summary-quantity">-</strong>
+</div>
+<div class="summary-row">
+  <span>মোট মূল্য:</span>
+  <strong id="summary-total">-</strong>
+</div>
       <div class="summary-row"><span>পণ্য:</span><strong>Premium Wireless Airphone</strong></div>
       <div class="summary-row"><span>মূল্য:</span><strong>২৫০০ টাকা</strong></div>
       <div class="summary-row"><span>নাম:</span><strong id="summary-name">-</strong></div>
@@ -24,19 +32,26 @@
   </div>
 
   <script>
-    const orderData = JSON.parse(localStorage.getItem('soundoraOrderSummary') || '{}');
+  const UNIT_PRICE = 2500; // প্রতি পিস দাম
 
-    if (!orderData.name && !orderData.phone) {
-      window.location.href = './index.html';
-    }
+  const orderData = JSON.parse(localStorage.getItem('soundoraOrderSummary') || '{}');
 
-    const fullAddress = [orderData.upazila, orderData.district, orderData.division, orderData.address]
-      .filter(Boolean)
-      .join(', ');
+  if (!orderData.name && !orderData.phone) {
+    window.location.href = './index.html';
+  }
 
-    document.getElementById('summary-name').textContent = orderData.name || '-';
-    document.getElementById('summary-phone').textContent = orderData.phone || '-';
-    document.getElementById('summary-address').textContent = fullAddress || '-';
-  </script>
+  const qty = Number(orderData.quantity || 1);
+  const total = UNIT_PRICE * qty;
+
+  const fullAddress = [orderData.upazila, orderData.district, orderData.division, orderData.address]
+    .filter(Boolean)
+    .join(', ');
+
+  document.getElementById('summary-name').textContent = orderData.name || '-';
+  document.getElementById('summary-phone').textContent = orderData.phone || '-';
+  document.getElementById('summary-address').textContent = fullAddress || '-';
+  document.getElementById('summary-quantity').textContent = qty + ' পিস';
+  document.getElementById('summary-total').textContent = total.toLocaleString('bn-BD') + ' টাকা';
+</script>
 </body>
 </html>
