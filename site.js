@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
           division: form.elements.division.value,
           district: form.elements.district.value,
           upazila: form.elements.upazila.value,
-          address: form.elements.address.value.trim()
+          address: form.elements.address.value.trim(),
         };
 
         localStorage.setItem('soundoraOrderSummary', JSON.stringify(orderSummary));
