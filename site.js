@@ -23,7 +23,7 @@ const bdAddressData = {
   'চট্টগ্রাম': {
     districts: ['চট্টগ্রাম', 'কুমিল্লা', 'কক্সবাজার', 'ব্রাহ্মণবাড়িয়া', 'চাঁদপুর', 'ফেনী', 'লক্ষ্মীপুর', 'নোয়াখালী', 'খাগড়াছড়ি', 'রাঙ্গামাটি', 'বান্দরবান'],
     upazilas: {
-      'চট্টগ্রাম': ['আনোয়ারা', 'বাঁশখালী', 'বোয়ালখালী', 'চন্দনাইশ', 'ফটিকছড়ি', 'হাটহাজারী', 'লোহাগাড়া', 'মিরসরাই', 'পটিয়া', 'রাঙ্গুনিয়া', 'রাউজান', 'সন্দ্বীপ', 'সাতকানিয়া', 'সীতাকুণ্ড'],
+      'চট্গ্রাম': ['আনোয়ারা', 'বাঁশখালী', 'বোয়ালখালী', 'চন্দনাইশ', 'ফটিকছড়ি', 'হাটহাজারী', 'লোহাগাড়া', 'মিরসরাই', 'পটিয়া', 'রাঙ্গুনিয়া', 'রাউজান', 'সন্দ্বীপ', 'সাতকানিয়া', 'সীতাকুণ্ড'],
       'কুমিল্লা': ['বরুড়া', 'ব্রাহ্মণপাড়া', 'বুড়িচং', 'চান্দিনা', 'চৌদ্দগ্রাম', 'দাউদকান্দি', 'দেবিদ্বার', 'হোমনা', 'লাকসাম', 'মনোহরগঞ্জ', 'মেঘনা', 'মুরাদনগর', 'নাঙ্গলকোট', 'সদর', 'সদর দক্ষিণ', 'তিতাস'],
       'কক্সবাজার': ['চকরিয়া', 'কক্সবাজার সদর', 'কুতুবদিয়া', 'মহেশখালী', 'পেকুয়া', 'রামু', 'টেকনাফ', 'উখিয়া'],
       'ব্রাহ্মণবাড়িয়া': ['আখাউড়া', 'বাঞ্ছারামপুর', 'ব্রাহ্মণবাড়িয়া সদর', 'কসবা', 'নবীনগর', 'নাসিরনগর', 'সরাইল', 'আশুগঞ্জ', 'বিজয়নগর'],
@@ -133,30 +133,26 @@ initDivisionSelect();
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  // বাটন ইনঅ্যাক্টিভ করা যাতে বারবার ক্লিক না হয়
   btn.disabled = true;
   btn.innerText = 'অর্ডার প্রসেস হচ্ছে...';
 
-  // ডাটা গুগল শিটে পাঠানো
   fetch(scriptURL, {
     method: 'POST',
     body: new FormData(form),
     mode: 'no-cors'
   })
     .then(() => {
-      // যেহেতু no-cors মুড, তাই সরাসরি সাকসেস মেসেজ দেখানো হচ্ছে
-      alert('ধন্যবাদ! আপনার অর্ডারটি সফলভাবে জমা হয়েছে।\nআমরা শীঘ্রই আপনার মোবাইল নম্বরে কল দেব।');
+      const orderSummary = {
+        name: form.elements.name.value.trim(),
+        phone: form.elements.phone.value.trim(),
+        division: form.elements.division.value,
+        district: form.elements.district.value,
+        upazila: form.elements.upazila.value,
+        address: form.elements.address.value.trim()
+      };
 
-      // ফর্মটি খালি করে দেওয়া
-      form.reset();
-      districtSelect.disabled = true;
-      upazilaSelect.disabled = true;
-      fillSelect(districtSelect, [], 'আগে বিভাগ নির্বাচন করুন');
-      fillSelect(upazilaSelect, [], 'আগে জেলা নির্বাচন করুন');
-
-      // বাটন আবার সচল করা
-      btn.disabled = false;
-      btn.innerText = 'অর্ডার কনফার্ম করুন';
+      localStorage.setItem('soundoraOrderSummary', JSON.stringify(orderSummary));
+      window.location.href = './order-summary.html';
     })
     .catch((error) => {
       alert('দুঃখিত, কোনো টেকনিক্যাল সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।');
