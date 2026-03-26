@@ -186,7 +186,7 @@ form.addEventListener('submit', (e) => {
         district: form.elements.district.value,
         upazila: form.elements.upazila.value,
         address: form.elements.address.value.trim(),
-        quantity: Number(form.elements.quantity.value || 1),
+        quantity: Number(form.elements.quantity.value || 1)
       };
 
       localStorage.setItem('soundoraOrderSummary', JSON.stringify(orderSummary));
