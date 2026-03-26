@@ -170,7 +170,6 @@ window.location.href = 'order-summary.html';
         btn.innerText = 'অর্ডার কনফার্ম করুন';
       });
   });
-});
 
   btn.disabled = true;
   btn.innerText = 'অর্ডার প্রসেস হচ্ছে...';
