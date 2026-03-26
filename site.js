@@ -67,68 +67,105 @@ const bdAddressData = {
   }
 };
 
-const form = document.getElementById('checkout-form');
-const btn = document.getElementById('submit-btn');
-const divisionSelect = document.getElementById('division');
-const districtSelect = document.getElementById('district');
-const upazilaSelect = document.getElementById('upazila');
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('checkout-form');
+  const btn = document.getElementById('submit-btn');
+  const divisionSelect = document.getElementById('division');
+  const districtSelect = document.getElementById('district');
+  const upazilaSelect = document.getElementById('upazila');
 
-function fillSelect(selectEl, options, placeholder) {
-  selectEl.innerHTML = '';
+  // যদি index page না হয়, তাহলে এই script আর run করবে না
+  if (!form || !btn || !divisionSelect || !districtSelect || !upazilaSelect) return;
 
-  const defaultOpt = document.createElement('option');
-  defaultOpt.value = '';
-  defaultOpt.textContent = placeholder;
-  selectEl.appendChild(defaultOpt);
+  function fillSelect(selectEl, options, placeholder) {
+    selectEl.innerHTML = '';
 
-  options.forEach((item) => {
-    const option = document.createElement('option');
-    option.value = item;
-    option.textContent = item;
-    selectEl.appendChild(option);
+    const defaultOpt = document.createElement('option');
+    defaultOpt.value = '';
+    defaultOpt.textContent = placeholder;
+    selectEl.appendChild(defaultOpt);
+
+    options.forEach((item) => {
+      const option = document.createElement('option');
+      option.value = item;
+      option.textContent = item;
+      selectEl.appendChild(option);
+    });
+  }
+
+  function initDivisionSelect() {
+    const divisions = Object.keys(bdAddressData);
+    fillSelect(divisionSelect, divisions, 'বিভাগ পছন্দ করুন');
+  }
+
+  divisionSelect.addEventListener('change', () => {
+    const selectedDivision = divisionSelect.value;
+
+    if (!selectedDivision) {
+      districtSelect.disabled = true;
+      upazilaSelect.disabled = true;
+      fillSelect(districtSelect, [], 'আগে বিভাগ নির্বাচন করুন');
+      fillSelect(upazilaSelect, [], 'আগে জেলা নির্বাচন করুন');
+      return;
+    }
+
+    const districts = bdAddressData[selectedDivision].districts || [];
+    fillSelect(districtSelect, districts, 'জেলা পছন্দ করুন');
+    districtSelect.disabled = false;
+
+    fillSelect(upazilaSelect, [], 'আগে জেলা নির্বাচন করুন');
+    upazilaSelect.disabled = true;
   });
-}
 
-function initDivisionSelect() {
-  const divisions = Object.keys(bdAddressData);
-  fillSelect(divisionSelect, divisions, 'বিভাগ পছন্দ করুন');
-}
+  districtSelect.addEventListener('change', () => {
+    const selectedDivision = divisionSelect.value;
+    const selectedDistrict = districtSelect.value;
 
-divisionSelect.addEventListener('change', () => {
-  const selectedDivision = divisionSelect.value;
+    if (!selectedDivision || !selectedDistrict) {
+      fillSelect(upazilaSelect, [], 'আগে জেলা নির্বাচন করুন');
+      upazilaSelect.disabled = true;
+      return;
+    }
 
-  if (!selectedDivision) {
-    districtSelect.disabled = true;
-    upazilaSelect.disabled = true;
-    fillSelect(districtSelect, [], 'আগে বিভাগ নির্বাচন করুন');
-    fillSelect(upazilaSelect, [], 'আগে জেলা নির্বাচন করুন');
-    return;
-  }
+    const mappedUpazilas = (bdAddressData[selectedDivision].upazilas || {})[selectedDistrict] || ['সদর'];
+    fillSelect(upazilaSelect, mappedUpazilas, 'উপজেলা পছন্দ করুন');
+    upazilaSelect.disabled = false;
+  });
 
-  const districts = bdAddressData[selectedDivision].districts;
-  fillSelect(districtSelect, districts, 'জেলা পছন্দ করুন');
-  districtSelect.disabled = false;
+  initDivisionSelect();
 
-  fillSelect(upazilaSelect, [], 'আগে জেলা নির্বাচন করুন');
-  upazilaSelect.disabled = true;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    btn.disabled = true;
+    btn.innerText = 'অর্ডার প্রসেস হচ্ছে...';
+
+    fetch(scriptURL, {
+      method: 'POST',
+      body: new FormData(form),
+      mode: 'no-cors'
+    })
+      .then(() => {
+        const orderSummary = {
+          name: form.elements.name.value.trim(),
+          phone: form.elements.phone.value.trim(),
+          division: form.elements.division.value,
+          district: form.elements.district.value,
+          upazila: form.elements.upazila.value,
+          address: form.elements.address.value.trim()
+        };
+
+        localStorage.setItem('soundoraOrderSummary', JSON.stringify(orderSummary));
+        window.location.href = 'order-summary.html';
+      })
+      .catch((error) => {
+        alert('দুঃখিত, কোনো টেকনিক্যাল সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।');
+        console.error('Error!', error.message);
+        btn.disabled = false;
+        btn.innerText = 'অর্ডার কনফার্ম করুন';
+      });
+  });
 });
-
-districtSelect.addEventListener('change', () => {
-  const selectedDivision = divisionSelect.value;
-  const selectedDistrict = districtSelect.value;
-
-  if (!selectedDivision || !selectedDistrict) {
-    fillSelect(upazilaSelect, [], 'আগে জেলা নির্বাচন করুন');
-    upazilaSelect.disabled = true;
-    return;
-  }
-
-  const mappedUpazilas = bdAddressData[selectedDivision].upazilas[selectedDistrict] || ['সদর'];
-  fillSelect(upazilaSelect, mappedUpazilas, 'উপজেলা পছন্দ করুন');
-  upazilaSelect.disabled = false;
-});
-
-initDivisionSelect();
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
