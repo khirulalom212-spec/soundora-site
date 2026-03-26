@@ -31,17 +31,19 @@
     </div>
   </div>
 
-  <script>
-  const UNIT_PRICE = 2500; // প্রতি পিস দাম
-
+<script>
+(() => {
+  const unitPrice = 2500; // প্রতি পিস দাম
   const orderData = JSON.parse(localStorage.getItem('soundoraOrderSummary') || '{}');
 
   if (!orderData.name && !orderData.phone) {
     window.location.href = './index.html';
+    return;
   }
 
-  const qty = Number(orderData.quantity || 1);
-  const total = UNIT_PRICE * qty;
+  const rawQty = Number.parseInt(orderData.quantity, 10);
+  const qty = Number.isNaN(rawQty) ? 1 : Math.max(1, Math.min(5, rawQty));
+  const total = unitPrice * qty;
 
   const fullAddress = [orderData.upazila, orderData.district, orderData.division, orderData.address]
     .filter(Boolean)
@@ -52,14 +54,7 @@
   document.getElementById('summary-address').textContent = fullAddress || '-';
   document.getElementById('summary-quantity').textContent = qty + ' পিস';
   document.getElementById('summary-total').textContent = total.toLocaleString('bn-BD') + ' টাকা';
-
-  const rawQty = Number.parseInt(orderData.quantity, 10);
-const qty = Number.isNaN(rawQty) ? 1 : Math.max(1, Math.min(5, rawQty));
-const total = UNIT_PRICE * qty;
-
-document.getElementById('summary-quantity').textContent = qty + ' পিস';
-document.getElementById('summary-total').textContent = total.toLocaleString('bn-BD') + ' টাকা';
-
+})();
 </script>
 </body>
 </html>
