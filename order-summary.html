@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>অর্ডার সামারি | Soundora</title>
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <div class="summary-container">
+    <div class="summary-card">
+      <h1>✅ আপনার অর্ডার কনফার্ম হয়েছে</h1>
+      <p class="summary-subtitle">ধন্যবাদ! নিচে আপনার অর্ডারের তথ্য দেখুন।</p>
+
+      <div class="summary-row"><span>পণ্য:</span><strong>Premium Wireless Airphone</strong></div>
+      <div class="summary-row"><span>মূল্য:</span><strong>২৫০০ টাকা</strong></div>
+      <div class="summary-row"><span>নাম:</span><strong id="summary-name">-</strong></div>
+      <div class="summary-row"><span>মোবাইল:</span><strong id="summary-phone">-</strong></div>
+      <div class="summary-row"><span>ডেলিভারি ঠিকানা:</span><strong id="summary-address">-</strong></div>
+
+      <p class="summary-note">আমাদের টিম খুব দ্রুত আপনার সাথে মোবাইলে যোগাযোগ করবে।</p>
+      <a class="back-link" href="./index.html">← আবার হোমে যান</a>
+    </div>
+  </div>
+
+  <script>
+    const orderData = JSON.parse(localStorage.getItem('soundoraOrderSummary') || '{}');
+
+    if (!orderData.name && !orderData.phone) {
+      window.location.href = './index.html';
+    }
+
+    const fullAddress = [orderData.upazila, orderData.district, orderData.division, orderData.address]
+      .filter(Boolean)
+      .join(', ');
+
+    document.getElementById('summary-name').textContent = orderData.name || '-';
+    document.getElementById('summary-phone').textContent = orderData.phone || '-';
+    document.getElementById('summary-address').textContent = fullAddress || '-';
+  </script>
+</body>
+</html>
