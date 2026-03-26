@@ -145,15 +145,20 @@ document.addEventListener('DOMContentLoaded', () => {
       body: new FormData(form),
       mode: 'no-cors'
     })
-      .then(() => {
-        const orderSummary = {
-          name: form.elements.name.value.trim(),
-          phone: form.elements.phone.value.trim(),
-          division: form.elements.division.value,
-          district: form.elements.district.value,
-          upazila: form.elements.upazila.value,
-          address: form.elements.address.value.trim(),
-        };
+      const selectedQuantity = Number.parseInt(form.elements.quantity.value, 10);
+
+const orderSummary = {
+  name: form.elements.name.value.trim(),
+  phone: form.elements.phone.value.trim(),
+  division: form.elements.division.value,
+  district: form.elements.district.value,
+  upazila: form.elements.upazila.value,
+  address: form.elements.address.value.trim(),
+  quantity: Number.isNaN(selectedQuantity) ? 1 : Math.max(1, Math.min(5, selectedQuantity)),
+};
+
+localStorage.setItem('soundoraOrderSummary', JSON.stringify(orderSummary));
+window.location.href = 'order-summary.html';
 
         localStorage.setItem('soundoraOrderSummary', JSON.stringify(orderSummary));
         window.location.href = 'order-summary.html';
