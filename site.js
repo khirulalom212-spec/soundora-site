@@ -135,48 +135,36 @@ document.addEventListener('DOMContentLoaded', () => {
   initDivisionSelect();
 
   form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    btn.disabled = true;
-    btn.innerText = 'অর্ডার প্রসেস হচ্ছে...';
-
-    fetch(scriptURL, {
-      method: 'POST',
-      body: new FormData(form),
-      mode: 'no-cors'
-    })
-      const selectedQuantity = Number.parseInt(form.elements.quantity.value, 10);
-.then(() => {
-const orderSummary = {
-  name: form.elements.name.value.trim(),
-  phone: form.elements.phone.value.trim(),
-  division: form.elements.division.value,
-  district: form.elements.district.value,
-  upazila: form.elements.upazila.value,
-  address: form.elements.address.value.trim(),
-  quantity: Number.isNaN(selectedQuantity) ? 1 : Math.max(1, Math.min(5, selectedQuantity)),
-};
-
-localStorage.setItem('soundoraOrderSummary', JSON.stringify(orderSummary));
-window.location.href = 'order-summary.html';
-
-        localStorage.setItem('soundoraOrderSummary', JSON.stringify(orderSummary));
-        window.location.href = 'order-summary.html';
-      })
-      .catch((error) => {
-        alert('দুঃখিত, কোনো টেকনিক্যাল সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।');
-        console.error('Error!', error.message);
-        btn.disabled = false;
-        btn.innerText = 'অর্ডার কনফার্ম করুন';
-      });
-  });
+  e.preventDefault();
 
   btn.disabled = true;
   btn.innerText = 'অর্ডার প্রসেস হচ্ছে...';
 
-    .catch((error) => {
-      alert('দুঃখিত, কোনো টেকনিক্যাল সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।');
-      console.error('Error!', error.message);
-      btn.disabled = false;
-      btn.innerText = 'অর্ডার কনফার্ম করুন';
-    });
+  const selectedQuantity = Number.parseInt(form.elements.quantity.value, 10);
+
+  fetch(scriptURL, {
+    method: 'POST',
+    body: new FormData(form),
+    mode: 'no-cors'
+  })
+  .then(() => {
+    const orderSummary = {
+      name: form.elements.name.value.trim(),
+      phone: form.elements.phone.value.trim(),
+      division: form.elements.division.value,
+      district: form.elements.district.value,
+      upazila: form.elements.upazila.value,
+      address: form.elements.address.value.trim(),
+      quantity: Number.isNaN(selectedQuantity) ? 1 : Math.max(1, Math.min(5, selectedQuantity)),
+    };
+
+    localStorage.setItem('soundoraOrderSummary', JSON.stringify(orderSummary));
+    window.location.href = 'order-summary.html';
+  })
+  .catch((error) => {
+    alert('দুঃখিত, কোনো টেকনিক্যাল সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।');
+    console.error('Error!', error.message);
+    btn.disabled = false;
+    btn.innerText = 'অর্ডার কনফার্ম করুন';
+  });
+});
