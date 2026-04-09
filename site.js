@@ -1,5 +1,5 @@
 // আপনার গুগল অ্যাপ স্ক্রিপ্ট ইউআরএল
-const scriptURL = 'https://script.google.com/macros/s/AKfycby5eppAZG-FRbzrxDiEjeTt-_RJ8pYX0Y-PXjZjvBQzMYG4loWge_737C17Md3wCmNinw/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbywyjWuqh63AVAbn6rNGXRR_X3hPeOhSWTRZqYOafp6eBn2AklERjyYYydCJv0t18UKDg/exec';
 
 const bdAddressData = {
   'ঢাকা': {
