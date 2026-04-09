@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mode: 'no-cors'
     })
       const selectedQuantity = Number.parseInt(form.elements.quantity.value, 10);
-.than(() => {
+.then(() => {
 const orderSummary = {
   name: form.elements.name.value.trim(),
   phone: form.elements.phone.value.trim(),
