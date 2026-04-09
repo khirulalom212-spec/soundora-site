@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mode: 'no-cors'
     })
       const selectedQuantity = Number.parseInt(form.elements.quantity.value, 10);
-
+.than(() => {
 const orderSummary = {
   name: form.elements.name.value.trim(),
   phone: form.elements.phone.value.trim(),
@@ -174,25 +174,6 @@ window.location.href = 'order-summary.html';
   btn.disabled = true;
   btn.innerText = 'অর্ডার প্রসেস হচ্ছে...';
 
-  fetch(scriptURL, {
-    method: 'POST',
-    body: new FormData(form),
-    mode: 'no-cors'
-  })
-    .then(() => {
-      const orderSummary = {
-        name: form.elements.name.value.trim(),
-        phone: form.elements.phone.value.trim(),
-        division: form.elements.division.value,
-        district: form.elements.district.value,
-        upazila: form.elements.upazila.value,
-        address: form.elements.address.value.trim(),
-        quantity: Number(form.elements.quantity.value || 1),
-      };
-
-      localStorage.setItem('soundoraOrderSummary', JSON.stringify(orderSummary));
-      window.location.href = './order-summary.html';
-    })
     .catch((error) => {
       alert('দুঃখিত, কোনো টেকনিক্যাল সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।');
       console.error('Error!', error.message);
