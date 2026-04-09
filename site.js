@@ -168,4 +168,3 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.innerText = 'অর্ডার কনফার্ম করুন';
   });
 });
-});
