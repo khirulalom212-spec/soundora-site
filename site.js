@@ -211,16 +211,20 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 });
 
-function saveOrder() {
+function saveOrder(event) {
+  event.preventDefault();
+
   let orders = JSON.parse(localStorage.getItem("orders")) || [];
 
   let newOrder = {
-    name: document.getElementById("name").value,
-    phone: document.getElementById("phone").value,
+    name: document.querySelector('input[name="name"]').value,
+    phone: document.querySelector('input[name="phone"]').value,
+    division: document.getElementById("division").value,
     district: document.getElementById("district").value,
     upazila: document.getElementById("upazila").value,
-    address: document.getElementById("address").value,
-    product: "Airphone",
+    address: document.querySelector('textarea[name="address"]').value,
+    quantity: document.querySelector('select[name="quantity"]').value,
+    product: "Premium Airphone",
     price: "990৳"
   };
 
