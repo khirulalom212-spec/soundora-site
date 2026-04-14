@@ -27,7 +27,8 @@
 
         <div class="order-box">
             <h3>অর্ডার করতে নিচের তথ্যগুলো দিন</h3>
-            <form id="checkout-form">
+            
+                <form id="checkout-form" onsubmit="saveOrder(event)">
                 <div class="input-group">
                     <label>আপনার নাম:</label>
                     <input type="text" name="name" placeholder="পুরো নাম লিখুন" required>
