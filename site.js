@@ -230,3 +230,19 @@ function saveOrder() {
   // redirect to summary page
   window.location.href = "order-summary.html";
 }
+
+function loadSummary() {
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+  if (orders.length > 0) {
+    let lastOrder = orders[orders.length - 1];
+
+    document.getElementById("name").innerText = lastOrder.name;
+    document.getElementById("phone").innerText = lastOrder.phone;
+    document.getElementById(" district").innerText = lastOrder.district;
+    document.getElementById("upazila").innerText = lastOrder.upazila;
+    document.getElementById("address").innerText = lastOrder.address;
+    document.getElementById("product").innerText = lastOrder.product;
+    document.getElementById("price").innerText = lastOrder.price;
+  }
+}
