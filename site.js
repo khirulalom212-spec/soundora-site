@@ -210,3 +210,23 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 });
+
+function saveOrder() {
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+  let newOrder = {
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    district: document.getElementById("district").value,
+    upazila: document.getElementById("upazila").value,
+    address: document.getElementById("address").value,
+    product: "Airphone",
+    price: "990৳"
+  };
+
+  orders.push(newOrder);
+  localStorage.setItem("orders", JSON.stringify(orders));
+
+  // redirect to summary page
+  window.location.href = "order-summary.html";
+}
