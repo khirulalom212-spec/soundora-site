@@ -1,3 +1,12 @@
+const PRODUCTS = [
+  { id: 'p1', name: 'Premium Wireless Airphone', price: 990, image: 'file_00000000d5dc71fab880da618d7aafe5.png', description: 'Deep bass + 6 months warranty' },
+  { id: 'p2', name: 'Soundora Neckband X2', price: 1250, image: 'airphone.jpg', description: 'Long battery backup for daily use' },
+  { id: 'p3', name: 'Gaming Earbuds Pro', price: 1490, image: 'file_00000000d5dc71fab880da618d7aafe5.png', description: 'Low latency mode for gaming' },
+  { id: 'p4', name: 'Studio Headphone Lite', price: 1890, image: 'airphone.jpg', description: 'Clear vocal and comfort cushions' },
+  { id: 'p5', name: 'Soundora Smart Speaker Mini', price: 2190, image: 'file_00000000d5dc71fab880da618d7aafe5.png', description: 'Compact smart audio speaker' },
+  { id: 'p6', name: 'USB-C Fast Charger 25W', price: 650, image: 'airphone.jpg', description: 'Fast and safe charging' }
+];
+
 const bdAddressData = {
   'ঢাকা': { districts: ['ঢাকা', 'গাজীপুর'], upazilas: { 'ঢাকা': ['মিরপুর', 'গুলশান', 'মোহাম্মদপুর'], 'গাজীপুর': ['টঙ্গী', 'শ্রীপুর'] } },
   'চট্টগ্রাম': { districts: ['চট্টগ্রাম', 'কুমিল্লা'], upazilas: { 'চট্টগ্রাম': ['পটিয়া', 'রাউজান'], 'কুমিল্লা': ['সদর', 'দেবিদ্বার'] } },
