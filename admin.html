@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8">
   <title>Soundora Admin Panel</title>
@@ -13,11 +14,41 @@
     .delete { background:red; color:#fff; border:none; }
     .clear { margin:10px 0; background:black; color:white; border:none; }
   </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soundora Admin Dashboard</title>
+  <link rel="stylesheet" href="site.css">
 </head>
 <body>
+  <main class="page admin-page">
+    <section class="card">
+      <h1>📊 Soundora Admin Dashboard</h1>
+      <p>এখানে সব অর্ডার দেখা, স্ট্যাটাস আপডেট এবং ডিলিট করা যাবে।</p>
+      <a class="back-link" href="index.html">← স্টোরে ফিরে যান</a>
+    </section>
 
 <h1>📦 Soundora Admin Panel</h1>
 <button class="clear" onclick="clearAll()">Clear All Orders</button>
+    <section class="card">
+      <button id="clear-orders" class="danger-btn" type="button">সব অর্ডার ডিলিট করুন</button>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>সময়</th>
+              <th>Tracking</th>
+              <th>কাস্টমার</th>
+              <th>ফোন</th>
+              <th>পণ্য</th>
+              <th>মোট</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="orderTable"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
 
 <table>
   <thead>
@@ -32,12 +63,21 @@
   </thead>
   <tbody id="orderTable"></tbody>
 </table>
+  <script>
+    const ORDER_KEY = 'soundoraOrders';
+    const getOrders = () => JSON.parse(localStorage.getItem(ORDER_KEY) || '[]');
+    const setOrders = (orders) => localStorage.setItem(ORDER_KEY, JSON.stringify(orders));
 
 <script>
   function loadOrders() {
     const orders = JSON.parse(localStorage.getItem("orders")) || [];
     const table = document.getElementById("orderTable");
     table.innerHTML = "";
+    function updateStatus(orderId, status) {
+      const orders = getOrders().map((order) => order.id === orderId ? { ...order, status } : order);
+      setOrders(orders);
+      renderOrders();
+    }
 
     orders.forEach((order, index) => {
       const row = `
@@ -53,6 +93,11 @@
       table.innerHTML += row;
     });
   }
+    function deleteOrder(orderId) {
+      const orders = getOrders().filter((order) => order.id !== orderId);
+      setOrders(orders);
+      renderOrders();
+    }
 
   function deleteOrder(index) {
     let orders = JSON.parse(localStorage.getItem("orders")) || [];
@@ -60,16 +105,53 @@
     localStorage.setItem("orders", JSON.stringify(orders));
     loadOrders();
   }
+    function renderOrders() {
+      const table = document.getElementById('orderTable');
+      const orders = getOrders().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   function clearAll() {
     if(confirm("Are you sure?")) {
       localStorage.removeItem("orders");
       loadOrders();
+      if (!orders.length) {
+        table.innerHTML = '<tr><td colspan="8">কোনো অর্ডার নেই।</td></tr>';
+        return;
+      }
+
+      table.innerHTML = orders.map((o) => `
+        <tr>
+          <td>${new Date(o.createdAt).toLocaleString('bn-BD')}</td>
+          <td>${o.trackingId}</td>
+          <td>${o.customerName}</td>
+          <td>${o.phone}</td>
+          <td>${o.productName} × ${o.quantity}</td>
+          <td>${o.totalPrice.toLocaleString('bn-BD')}৳</td>
+          <td>
+            <select onchange="updateStatus('${o.id}', this.value)">
+              <option value="Pending" ${o.status === 'Pending' ? 'selected' : ''}>Pending</option>
+              <option value="Processing" ${o.status === 'Processing' ? 'selected' : ''}>Processing</option>
+              <option value="Shipped" ${o.status === 'Shipped' ? 'selected' : ''}>Shipped</option>
+              <option value="Delivered" ${o.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+              <option value="Cancelled" ${o.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+            </select>
+          </td>
+          <td><button class="danger-btn" onclick="deleteOrder('${o.id}')">Delete</button></td>
+        </tr>
+      `).join('');
     }
   }
 
   loadOrders();
 </script>
+    document.getElementById('clear-orders').addEventListener('click', () => {
+      if (!confirm('সব অর্ডার ডিলিট করতে চান?')) return;
+      localStorage.removeItem(ORDER_KEY);
+      renderOrders();
+    });
 
+    window.updateStatus = updateStatus;
+    window.deleteOrder = deleteOrder;
+    renderOrders();
+  </script>
 </body>
-</html>
+</html
