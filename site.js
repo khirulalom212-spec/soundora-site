@@ -1,6 +1,3 @@
-// আপনার গুগল অ্যাপ স্ক্রিপ্ট ইউআরএল
-const scriptURL = 'https://script.google.com/macros/s/AKfycbywyjWuqh63AVAbn6rNGXRR_X3hPeOhSWTRZqYOafp6eBn2AklERjyYYydCJv0t18UKDg/exec';
-
 const bdAddressData = {
   'ঢাকা': { districts: ['ঢাকা', 'গাজীপুর'], upazilas: { 'ঢাকা': ['মিরপুর', 'গুলশান', 'মোহাম্মদপুর'], 'গাজীপুর': ['টঙ্গী', 'শ্রীপুর'] } },
   'চট্টগ্রাম': { districts: ['চট্টগ্রাম', 'কুমিল্লা'], upazilas: { 'চট্টগ্রাম': ['পটিয়া', 'রাউজান'], 'কুমিল্লা': ['সদর', 'দেবিদ্বার'] } },
