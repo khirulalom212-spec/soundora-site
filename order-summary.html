@@ -11,6 +11,7 @@
     <div class="summary-card">
       <h1>✅ আপনার অর্ডার কনফার্ম হয়েছে</h1>
       <p class="summary-subtitle">ধন্যবাদ! নিচে আপনার অর্ডারের তথ্য দেখুন।</p>
+      <p class="summary-subtitle">ধন্যবাদ! নিচে আপনার অর্ডার তথ্য ও ট্র্যাকিং আইডি দেখুন।</p>
 
       <div class="summary-row">
         <span>পণ্য:</span>
@@ -47,6 +48,14 @@
         <strong id="summary-address">-</strong>
     </div>
 </div>
+      <div class="summary-row"><span>Tracking ID:</span><strong id="summary-tracking">-</strong></div>
+      <div class="summary-row"><span>পণ্য:</span><strong id="summary-product">-</strong></div>
+      <div class="summary-row"><span>পরিমাণ:</span><strong id="summary-quantity">-</strong></div>
+      <div class="summary-row"><span>মোট মূল্য:</span><strong id="summary-total">-</strong></div>
+      <div class="summary-row"><span>নাম:</span><strong id="summary-name">-</strong></div>
+      <div class="summary-row"><span>মোবাইল:</span><strong id="summary-phone">-</strong></div>
+      <div class="summary-row"><span>ডেলিভারি ঠিকানা:</span><strong id="summary-address">-</strong></div>
+      <div class="summary-row"><span>স্ট্যাটাস:</span><strong id="summary-status">-</strong></div>
 
       <p class="summary-note">আমাদের টিম খুব দ্রুত আপনার সাথে মোবাইলে যোগাযোগ করবে।</p>
       <a class="back-link" href="./index.html">← আবার হোমে যান</a>
@@ -79,5 +88,28 @@
   document.getElementById('summary-total').textContent = total.toLocaleString('bn-BD') + ' টাকা';
 })();
 </script>
+  <script>
+    (() => {
+      const orderData = JSON.parse(localStorage.getItem('soundoraOrderSummary') || '{}');
+      if (!orderData.id) {
+        window.location.href = './index.html';
+        return;
+      }
+
+      const fullAddress = [orderData.upazila, orderData.district, orderData.division, orderData.address]
+        .filter(Boolean)
+        .join(', ');
+
+      document.getElementById('summary-tracking').textContent = orderData.trackingId || '-';
+      document.getElementById('summary-product').textContent = orderData.productName || '-';
+      document.getElementById('summary-quantity').textContent = `${orderData.quantity || 1} পিস`;
+      document.getElementById('summary-total').textContent = `${(orderData.totalPrice || 0).toLocaleString('bn-BD')}৳`;
+      document.getElementById('summary-name').textContent = orderData.customerName || '-';
+      document.getElementById('summary-phone').textContent = orderData.phone || '-';
+      document.getElementById('summary-address').textContent = fullAddress || '-';
+      document.getElementById('summary-status').textContent = orderData.status || 'Pending';
+    })();
+  </script>
 </body>
 </html>
+
