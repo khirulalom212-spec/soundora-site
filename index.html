@@ -84,3 +84,119 @@
     <script src="site.js"></script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soundora | Product Listing + Order</title>
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <h1>🎧 Soundora Store</h1>
+      <p>৫–১০ টি প্রোডাক্ট লিস্টিং, গেস্ট অর্ডার, এবং লগইন করলে অর্ডার হিস্ট্রি + ট্র্যাকিং।</p>
+      <a class="admin-link" href="admin.html">Admin Dashboard</a>
+    </section>
+
+    <section class="auth-panel card">
+      <div class="auth-header">
+        <h2>অ্যাকাউন্ট (ঐচ্ছিক)</h2>
+        <p>অ্যাকাউন্ট ছাড়া অর্ডার করা যাবে। অ্যাকাউন্ট করলে নিজের অর্ডার হিস্ট্রি দেখতে পারবেন।</p>
+      </div>
+
+      <form id="signup-form" class="auth-form">
+        <h3>Signup</h3>
+        <input type="text" name="name" placeholder="আপনার নাম" required>
+        <input type="email" name="email" placeholder="ইমেইল" required>
+        <input type="password" name="password" placeholder="পাসওয়ার্ড" required>
+        <button type="submit">Signup</button>
+      </form>
+
+      <form id="login-form" class="auth-form">
+        <h3>Login</h3>
+        <input type="email" name="email" placeholder="ইমেইল" required>
+        <input type="password" name="password" placeholder="পাসওয়ার্ড" required>
+        <button type="submit">Login</button>
+      </form>
+
+      <div id="current-user" class="current-user"></div>
+      <button id="logout-btn" class="ghost-btn" type="button">Logout</button>
+    </section>
+
+    <section>
+      <h2>🛍️ Product Listing</h2>
+      <div id="product-list" class="product-grid"></div>
+    </section>
+
+    <section class="card">
+      <h2>অর্ডার ফর্ম</h2>
+      <p id="selected-product-text">প্রোডাক্ট সিলেক্ট করুন।</p>
+
+      <form id="checkout-form">
+        <input type="hidden" name="productId" id="productId" required>
+        <input type="hidden" name="productName" id="productName" required>
+        <input type="hidden" name="price" id="price" required>
+
+        <div class="input-group">
+          <label>আপনার নাম:</label>
+          <input type="text" name="name" placeholder="পুরো নাম লিখুন" required>
+        </div>
+
+        <div class="input-group">
+          <label>মোবাইল নম্বর:</label>
+          <input type="tel" name="phone" placeholder="০১৭XXXXXXXX" pattern="[0-9]{11}" required>
+        </div>
+
+        <div class="input-group">
+          <label>বিভাগ নির্বাচন করুন:</label>
+          <select id="division" name="division" required>
+            <option value="">বিভাগ পছন্দ করুন</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>জেলা নির্বাচন করুন:</label>
+          <select id="district" name="district" required disabled>
+            <option value="">আগে বিভাগ নির্বাচন করুন</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>উপজেলা নির্বাচন করুন:</label>
+          <select id="upazila" name="upazila" required disabled>
+            <option value="">আগে জেলা নির্বাচন করুন</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>বিস্তারিত ঠিকানা:</label>
+          <textarea name="address" rows="3" placeholder="গ্রাম/রোড, বাসা নং, পোস্ট অফিস" required></textarea>
+        </div>
+
+        <div class="input-group">
+          <label>পরিমাণ:</label>
+          <select name="quantity" required>
+            <option value="1">1 পিস</option>
+            <option value="2">2 পিস</option>
+            <option value="3">3 পিস</option>
+            <option value="4">4 পিস</option>
+            <option value="5">5 পিস</option>
+          </select>
+        </div>
+
+        <button type="submit" id="submit-btn">অর্ডার কনফার্ম করুন</button>
+      </form>
+    </section>
+
+    <section class="card" id="my-orders-card">
+      <h2>📦 আমার অর্ডার</h2>
+      <p class="muted">লগইন করলে আপনার অর্ডার হিস্ট্রি এখানে দেখাবে।</p>
+      <div id="my-orders"></div>
+    </section>
+  </main>
+
+  <script src="site.js"></script>
+</body>
+</html>
